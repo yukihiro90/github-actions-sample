@@ -1,5 +1,6 @@
 services:
   php:
+    image: php-test-image
     build: ./
     volumes:
       - .:/app

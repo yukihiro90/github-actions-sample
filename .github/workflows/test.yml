@@ -7,4 +7,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "test"
+      - uses: actions/checkout@v4
+
+      - name: setup
+        run: make setup
+
+      - name: test
+        run: make test

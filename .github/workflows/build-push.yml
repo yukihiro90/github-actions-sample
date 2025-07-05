@@ -1,0 +1,23 @@
+name: Build & Push Docker to ECR
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Docker image tag'
+        required: true
+        default: 'latest'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: echo branch
+        run: echo ${{ github.event.inputs.branch }}
+
+      - name: echo tag
+        run: echo ${{ github.event.inputs.tag }}

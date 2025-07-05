@@ -26,16 +26,10 @@ jobs:
                   ... on Issue {
                     projectItems(first: 10) {
                       nodes {
-                        id
-                        fieldValues(first: 10) {
-                          nodes {
-                            field {
-                              name
-                            }
-                            ... on ProjectV2ItemFieldSingleSelectValue {
-                              name
-                              optionId
-                            }
+                        id,
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            name
                           }
                         }
                       }
@@ -45,24 +39,4 @@ jobs:
               }
             `);
 
-            const item = projects.node.projectItems.nodes[0];
-            const statusField = item.fieldValues.nodes.find(f => f.field.name === "Status");
-
-            if (statusField?.optionId !== doneStatusId) return;
-
-            const today = new Date().toISOString().split('T')[0];
-
-            await github.graphql(`
-              mutation {
-                updateProjectV2ItemFieldValue(input: {
-                  projectId: "${projectId}",
-                  itemId: "${item.id}",
-                  fieldId: "PVTF_lAHOAIMzxs4A9Ip5zgw7Zf4",  // end_dateのフィールドID
-                  value: { date: "${today}" }
-                }) {
-                  projectV2Item {
-                    id
-                  }
-                }
-              }
-            `);
+            console.log(projects);

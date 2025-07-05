@@ -41,6 +41,8 @@ jobs:
             console.log(query);
 
             const issue = await github.graphql(query);
+            console.log(issue);
+
             const projects = issue.data.node.projectItems.nodes;
 
             console.log(projects);

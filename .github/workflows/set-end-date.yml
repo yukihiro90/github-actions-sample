@@ -26,12 +26,7 @@ jobs:
                   ... on Issue {
                     projectItems(first: 10) {
                       nodes {
-                        id,
-                        fieldValueByName(name: "Status") {
-                          ... on ProjectV2ItemFieldSingleSelectValue {
-                            name
-                          }
-                        }
+                        id
                       }
                     }
                   }

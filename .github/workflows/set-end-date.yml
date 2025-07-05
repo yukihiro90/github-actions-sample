@@ -14,24 +14,32 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const issueId = context.payload.issue?.node_id || context.payload.pull_request?.node_id;
-            console.log('issueId', issueId);
             if (!issueId) return;
 
             const projectId = 'PVT_kwHOAIMzxs4A9Ip5'; // プロジェクトID
             const doneStatusId = '98236657'; // 「Done」ステータスのID
 
-            const { data: projects } = await github.graphql(`
+            const query = `
               query {
                 node(id: "${issueId}") {
                   ... on Issue {
                     projectItems(first: 10) {
                       nodes {
-                        id
+                        id,
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            name
+                          }
+                        }
                       }
                     }
                   }
                 }
               }
-            `);
+            `;
+
+            console.log(query);
+
+            const { data: projects } = await github.graphql(query);
 
             console.log(projects);

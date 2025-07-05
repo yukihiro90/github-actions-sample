@@ -40,6 +40,7 @@ jobs:
 
             console.log(query);
 
-            const { data: projects } = await github.graphql(query);
+            const issue = await github.graphql(query);
+            const projects = issue.data.node.projectItems.nodes;
 
             console.log(projects);

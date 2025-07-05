@@ -27,7 +27,7 @@ jobs:
                 updateProjectV2ItemFieldValue(input: {
                   projectId: "${projectId}",
                   itemId: "PVTI_lAHOAIMzxs4A9Ip5zgcRNFo",
-                  fieldId: "PVTF_lAHOAIMzxs4A9Ip5zgw7Zf4",  // end_dateのフィールドID
+                  fieldId: "PVTF_lAHOAIMzxs4A9Ip5zgw7Zf4",
                   value: { date: "${today}" }
                 }) {
                   projectV2Item {

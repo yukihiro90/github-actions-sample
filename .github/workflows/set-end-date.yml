@@ -38,4 +38,4 @@ jobs:
                 }
               }
             `);
-            console.log(issue);
+            console.dir(issue, { depth: null });

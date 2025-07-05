@@ -19,12 +19,23 @@ jobs:
             const projectId = 'PVT_kwHOAIMzxs4A9Ip5'; // プロジェクトID
             const doneStatusId = '98236657'; // 「Done」ステータスのID
 
-            const res = await github.graphql(`
+            const issue = await github.graphql(`
               query {
-                viewer {
-                  login
+                node(id: "${issueId}") {
+                  ... on Issue {
+                    title,
+                    projectItems(first: 10) {
+                      nodes {
+                        id,
+                        fieldValueByName(name: "Status") {
+                          ... on ProjectV2ItemFieldSingleSelectValue {
+                            name
+                          }
+                        }
+                      }
+                    }
+                  }
                 }
               }
             `);
-
-            console.log(res);
+            console.log(issue);

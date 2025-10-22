@@ -13,24 +13,22 @@ jobs:
         with:
           github-token: ${{ secrets.MY_PAT }}
           script: |
-            const issueId = context.payload.issue?.node_id || context.payload.pull_request?.node_id;
+            const issueId = context.payload.issue?.node_id;
             if (!issueId) return;
 
-            const projectId = 'PVT_kwHOAIMzxs4A9Ip5'; // プロジェクトID
-            const doneStatusId = '98236657'; // 「Done」ステータスのID
+            const projectTitle = 'Test1';
 
             // issueのプロジェクトを取得
             const issue = await github.graphql(`
               query {
                 node(id: "${issueId}") {
                   ... on Issue {
-                    title,
                     projectItems(first: 10) {
                       nodes {
                         project {
-                          id
+                          id,
+                          title
                         },
-                        id,
                         fieldValueByName(name: "Status") {
                           ... on ProjectV2ItemFieldSingleSelectValue {
                             name
@@ -43,5 +41,5 @@ jobs:
               }
             `);
             console.dir(issue, {depth: null});
-            const projects = issue.projectItems.nodes
+            const projects = issue.node.projectItems.nodes
 
